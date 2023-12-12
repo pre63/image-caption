@@ -2,11 +2,13 @@ import torch.nn as nn
 import pandas as pd
 import torch
 from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, models, weights
+from torchvision import transforms, models
 from PIL import Image
 import nltk
 from collections import Counter
 import os
+from torchvision.models import ResNet152_Weights
+
 
 class CNNtoRNN(nn.Module):
     def __init__(self, embed_size, hidden_size, vocab_size, num_layers):
@@ -23,7 +25,7 @@ class CNNtoRNN(nn.Module):
 class EncoderCNN(nn.Module):
     def __init__(self, embed_size):
         super(EncoderCNN, self).__init__()
-        resnet = models.resnet152(weights=weights.ResNet152_Weights.DEFAULT)
+        resnet = models.resnet152(weights=ResNet152_Weights.DEFAULT)
         # Remove the last fully connected layer
         modules = list(resnet.children())[:-1]
         self.resnet = nn.Sequential(*modules)
