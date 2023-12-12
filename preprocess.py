@@ -34,6 +34,7 @@ for embed_size in embed_sizes:
         encoder = torch.nn.DataParallel(encoder)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using {device} device.")
     encoder.to(device)
 
     encoded_features, image_ids = encode_images(dataloader, encoder, device)
